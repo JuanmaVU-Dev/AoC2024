@@ -13,7 +13,6 @@
 void Day3::execute() {
 
     // Note: Raw string literal R"~()~" removes the need to escape the string
-    //std::regex const exp{R"~(don't\(\).*do\(\))~"};
     std::regex const e{R"~(do\(\)|mul\((\d{1,3}),(\d{1,3})\)|don't\(\))~"};
 
     int multiplication = 0;
@@ -53,8 +52,8 @@ void Day3::execute() {
                 std::regex_match(match.str().c_str(), matchGroup, e);
 
                 multiplication += std::stoi(match[1].str()) * std::stoi(match[2].str());
-                std::cout << match_str << " - ";
-                std::cout << std::stoi(match[1].str()) * std::stoi(match[2].str()) << std::endl;
+                //std::cout << match_str << " - ";
+                //std::cout << std::stoi(match[1].str()) * std::stoi(match[2].str()) << std::endl;
             }
 
         }
