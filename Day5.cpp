@@ -134,7 +134,7 @@ void Day5::execute() {
         // if(!checkCorrect(update, mapRules)) {
         //     std::cout << "incorrect update-------";
         // }
-        printUpdate(update);
+        //printUpdate(update);
         sumMiddleUpdates += update.at(update.size()/2);
     }
     std::cout << "Total middle value 2: " << sumMiddleUpdates << std::endl;
