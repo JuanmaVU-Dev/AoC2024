@@ -19,9 +19,21 @@ public:
 
     static void moveGuard(std::vector<std::vector<char>> &map, Guard &guard, std::set<std::tuple<int,int>> &setPositions);
 
+    static void moveGuard2(std::vector<std::vector<char>> &map, Guard &guard, bool turn, std::multiset<std::tuple<int, int>> &turnPositionsSet, bool
+                           &loop);
+
     static bool checkCollision(std::vector<std::vector<char>> &map, Guard &guard);
 
     static void turn(Guard &guard);
+
+    static void initializeGuard(std::set<std::tuple<int, int>> &setPositions, std::vector<std::vector<char>> &map,
+                                Guard &guard);
+
+    static void setStartingPosition(std::pair<int, int> &startingPosition, Guard &guard);
+
+    static bool findLoop(int turnPositions, int stuckPositions);
+
+    static void resetMap(std::vector<std::vector<char>> &map, std::pair<int, int> &startingPosition);
 
     void static execute();
 };
