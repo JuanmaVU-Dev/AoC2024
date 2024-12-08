@@ -10,6 +10,7 @@
 #include "Day4.h"
 #include "Day5.h"
 #include "Day6.h"
+#include "Day7.h"
 
 int main()
 {
@@ -18,6 +19,7 @@ int main()
     //Day3::execute();
     //Day4::execute();
     //Day5::execute();
-    Day6::execute();
+    //Day6::execute();
+    Day7::execute();
     return 0;
 }

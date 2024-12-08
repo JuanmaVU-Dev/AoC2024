@@ -15,4 +15,6 @@ add_executable(AoC2024 main.cpp
         Day5.cpp
         Day5.h
         Day6.cpp
-        Day6.h)
+        Day6.h
+        Day7.cpp
+        Day7.h)
