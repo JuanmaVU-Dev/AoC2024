@@ -48,7 +48,7 @@ bool Day8::checkBounds(const std::tuple<int, int> &point, int size) {
 void Day8::execute() {
     std::ifstream inFile;
 
-    inFile.open(R"(C:\Users\Juanma\Downloads\input_day_8_test.txt)");
+    inFile.open(R"(C:\Users\Juanma\Downloads\input_day_8.txt)");
 
     if (!inFile) {
         std::cerr << "Unable to open file datafile.txt";
@@ -92,27 +92,21 @@ void Day8::execute() {
                     std::tuple<int,int> B = antena2;
                     int xDiff = std::get<0>(B) - std::get<0>(A);
                     int yDiff = std::get<1>(B) - std::get<1>(A);
-                    int xa1 = std::get<0>(A) - xDiff;
-                    int ya1 = std::get<1>(A) - yDiff;
-                    int xa2 = std::get<0>(B) + xDiff;
-                    int ya2 = std::get<1>(B) + yDiff;
-                    std::tuple<int,int> a1 = std::make_tuple(xa1,ya1);
-                    std::tuple<int,int> a2 = std::make_tuple(xa2,ya2);
-                    if(checkBounds(a1,map.size())) {
-                        if(map.at(xa1).at(ya1)) {
-                            antinodesTotal.emplace(a1);
-                        }
+                    std::tuple<int,int> a = A;
+                    std::tuple<int,int> b = B;
+                    while(checkBounds(a,map.size())) {
+                        antinodesTotal.emplace(a);
+                        a = std::make_tuple(std::get<0>(a)+xDiff,std::get<1>(a)+yDiff);
                     }
-                    if(checkBounds(a2,map.size())) {
-                        if(map.at(xa2).at(ya2)) {
-                            antinodesTotal.emplace(a2);
-                        }
+                    while(checkBounds(b,map.size())) {
+                        antinodesTotal.emplace(b);
+                        b = std::make_tuple(std::get<0>(b)-xDiff,std::get<1>(b)-yDiff);
                     }
                     //printMap(map, antinodesTesting);
                 }
             }
         }
     }
-    //printMap(map, antinodesTotal);
+    printMap(map, antinodesTotal);
     std::cout << "Antinodes of a: " << antinodesTotal.size();
 }
