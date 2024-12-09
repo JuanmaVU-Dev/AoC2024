@@ -99,12 +99,12 @@ void Day8::execute() {
                     std::tuple<int,int> a1 = std::make_tuple(xa1,ya1);
                     std::tuple<int,int> a2 = std::make_tuple(xa2,ya2);
                     if(checkBounds(a1,map.size())) {
-                        if(map.at(xa1).at(ya1) != antennasList.first) {
+                        if(map.at(xa1).at(ya1)) {
                             antinodesTotal.emplace(a1);
                         }
                     }
                     if(checkBounds(a2,map.size())) {
-                        if(map.at(xa2).at(ya2) != antennasList.first) {
+                        if(map.at(xa2).at(ya2)) {
                             antinodesTotal.emplace(a2);
                         }
                     }
@@ -113,6 +113,6 @@ void Day8::execute() {
             }
         }
     }
-    printMap(map, antinodesTotal);
+    //printMap(map, antinodesTotal);
     std::cout << "Antinodes of a: " << antinodesTotal.size();
 }
