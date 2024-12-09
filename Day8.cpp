@@ -80,9 +80,10 @@ void Day8::execute() {
         std::vector<std::tuple<int,int>> antennas = mapAntennas[antennasList.first];
         for(int i=0;i<antennas.size();i++) {
             for(auto antena2 : antennas) {
-                std::set<std::tuple<double,int,int>> antinodesDistance;
-                std::set<std::tuple<int,int>> antinodesAux;
+                //std::set<std::tuple<double,int,int>> antinodesDistance;
+                //std::set<std::tuple<int,int>> antinodesAux;
                 if(antennas.at(i) != antena2) {
+                    std::set<std::tuple<int,int>> antinodesTesting;
                     std::tuple<int,int> A = antennas.at(i);
                     std::tuple<int,int> B = antena2;
                     double xDiff = std::get<0>(B) - std::get<0>(A);
@@ -91,44 +92,19 @@ void Day8::execute() {
                     double c = std::get<1>(B) - m * std::get<0>(B);
                     for(int x=0;x<map.size();x++) {
                         double y = m*x + c;
-                        if(y >= 0 && y<map.size() && std::fmod(y,1) == 0 && map.at(x).at(y) != antennasList.first) {
+                        if(y >= 0 && y<map.size() && map.at(x).at(y) != antennasList.first) {
                             //if(map.at(x).at(y) == '.') map.at(x).at(y) = '#';
-                            double distanceAB = distancePoints(A,std::make_tuple(x,y));
-                            double distanceBA = distancePoints(B,std::make_tuple(x,y));
-                            if(distancePoints(A,B) == distanceAB || distancePoints(A,B) == distanceBA) {
+                            std::tuple<int,int> X = std::make_tuple(x,y);
+                            double distanceAX = distancePoints(A,X);
+                            double distanceBX = distancePoints(B,X);
+                            if(distancePoints(A,B) == distanceAX || distancePoints(A,B) == distanceBX) {
                                 antinodesTotal.emplace(x,y);
+                                antinodesTesting.emplace(x,y);
                             }
-                            antinodesDistance.emplace(distanceAB+distanceBA,x,y);
+                            //antinodesDistance.emplace(distanceAB+distanceBA,x,y);
                         }
                     }
-                    for(auto antinode : antinodesDistance) {
-                        int x;
-                        int y;
-                        double distance;
-                        std::tie(distance,x,y) = antinode;
-                        std::cout << "- " << antennasList.first << " - (" << x << ", " << y << ") - " << distance << std::endl;
-                    }
-                    auto itr = antinodesDistance.begin();
-                    for(int count = 0;count<2 && itr != antinodesDistance.end();count++) {
-                        int x;
-                        int y;
-                        double distance;
-                        std::tie(distance,x,y) = *itr;
-                        //antinodesTotal.emplace(x,y);
-                        antinodesAux.emplace(x,y);
-                        if(std::next(itr,1) != antinodesDistance.end()) {
-                            int x2;
-                            int y2;
-                            double distance2;
-                            std::tie(distance2,x2,y2) = *std::next(itr,1);
-                            if(distance == distance2) {
-                                //antinodesTotal.emplace(x2,y2);
-                                antinodesAux.emplace(x2,y2);
-                                break;
-                            }
-                        }
-                    }
-                    printMap(map, antinodesAux);
+                    //printMap(map, antinodesTesting);
                 }
             }
         }
