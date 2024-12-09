@@ -41,6 +41,10 @@ void Day8::printMap(const std::vector<std::vector<char>> &map, const std::set<st
     }
 }
 
+bool Day8::checkBounds(const std::tuple<int, int> &point, int size) {
+    return std::get<0>(point) >= 0 && std::get<0>(point) < size && std::get<1>(point) >= 0 && std::get<1>(point)<size;
+}
+
 void Day8::execute() {
     std::ifstream inFile;
 
@@ -86,22 +90,22 @@ void Day8::execute() {
                     std::set<std::tuple<int,int>> antinodesTesting;
                     std::tuple<int,int> A = antennas.at(i);
                     std::tuple<int,int> B = antena2;
-                    double xDiff = std::get<0>(B) - std::get<0>(A);
-                    double yDiff = std::get<1>(B) - std::get<1>(A);
-                    double m =  yDiff / xDiff;
-                    double c = std::get<1>(B) - m * std::get<0>(B);
-                    for(int x=0;x<map.size();x++) {
-                        double y = m*x + c;
-                        if(y >= 0 && y<map.size() && map.at(x).at(y) != antennasList.first) {
-                            //if(map.at(x).at(y) == '.') map.at(x).at(y) = '#';
-                            std::tuple<int,int> X = std::make_tuple(x,y);
-                            double distanceAX = distancePoints(A,X);
-                            double distanceBX = distancePoints(B,X);
-                            if(distancePoints(A,B) == distanceAX || distancePoints(A,B) == distanceBX) {
-                                antinodesTotal.emplace(x,y);
-                                antinodesTesting.emplace(x,y);
-                            }
-                            //antinodesDistance.emplace(distanceAB+distanceBA,x,y);
+                    int xDiff = std::get<0>(B) - std::get<0>(A);
+                    int yDiff = std::get<1>(B) - std::get<1>(A);
+                    int xa1 = std::get<0>(A) - xDiff;
+                    int ya1 = std::get<1>(A) - yDiff;
+                    int xa2 = std::get<0>(B) + xDiff;
+                    int ya2 = std::get<1>(B) + yDiff;
+                    std::tuple<int,int> a1 = std::make_tuple(xa1,ya1);
+                    std::tuple<int,int> a2 = std::make_tuple(xa2,ya2);
+                    if(checkBounds(a1,map.size())) {
+                        if(map.at(xa1).at(ya1) != antennasList.first) {
+                            antinodesTotal.emplace(a1);
+                        }
+                    }
+                    if(checkBounds(a2,map.size())) {
+                        if(map.at(xa2).at(ya2) != antennasList.first) {
+                            antinodesTotal.emplace(a2);
                         }
                     }
                     //printMap(map, antinodesTesting);

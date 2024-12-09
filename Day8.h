@@ -17,6 +17,8 @@ public:
 
     static void printMap(const std::vector<std::vector<char>> & map, const std::set<std::tuple<int, int>> & set);
 
+    static bool checkBounds(const std::tuple<int, int> & a1, int size);
+
     static void execute();
 };
 
